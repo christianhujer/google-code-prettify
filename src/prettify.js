@@ -89,6 +89,9 @@ var prettyPrint;
 
 (function () {
   var win = window;
+
+  var NS_XHTML = 'http://www.w3.org/1999/xhtml';
+
   // Keyword lists for various languages.
   // We use things that coerce to strings to make them compact when minified
   // and to defeat aggressive optimizers that fold large string constants.
@@ -994,7 +997,7 @@ var prettyPrint;
   
     var document = node.ownerDocument;
   
-    var li = document.createElement('li');
+    var li = document.createElementNS(NS_XHTML, 'li');
     while (node.firstChild) {
       li.appendChild(node.firstChild);
     }
@@ -1093,7 +1096,7 @@ var prettyPrint;
       listItems[0].setAttribute('value', opt_startLineNum);
     }
   
-    var ol = document.createElement('ol');
+    var ol = document.createElementNS(NS_XHTML, 'ol');
     ol.className = 'linenums';
     var offset = Math.max(0, ((opt_startLineNum - 1 /* zero index */)) | 0) || 0;
     for (var i = 0, n = listItems.length; i < n; ++i) {
@@ -1205,7 +1208,7 @@ var prettyPrint;
           }
           textNode.nodeValue = styledText;
           var document = textNode.ownerDocument;
-          var span = document.createElement('span');
+          var span = document.createElementNS(NS_XHTML, 'span');
           span.className = decorations[decorationIndex + 1];
           var parentNode = textNode.parentNode;
           parentNode.replaceChild(span, textNode);
@@ -1411,7 +1414,7 @@ var prettyPrint;
    *     or the 1-indexed number of the first line in sourceCodeHtml.
    */
   function $prettyPrintOne(sourceCodeHtml, opt_langExtension, opt_numberLines) {
-    var container = document.createElement('div');
+    var container = document.createElementNS(NS_XHTML, 'div');
     // This could cause images to load and onload listeners to fire.
     // E.g. <img onerror="alert(1337)" src="nosuchimage.png">.
     // We assume that the inner HTML is from a trusted source.
